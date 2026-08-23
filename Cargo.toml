@@ -13,7 +13,6 @@ categories = ["api-bindings", "development-tools::ffi"]
 include = [
     "src/**/*",
     "examples/**/*",
-    "native/**/*",
     "Cargo.toml",
     "build.rs",
     "wrapper.h",
@@ -28,3 +27,4 @@ anyhow = "1"
 
 [build-dependencies]
 bindgen = "0.72.1"
+ureq = { version = "3.4" }

@@ -36,7 +36,16 @@ anyhow = "1.0"
 
 The native library linkage is fully managed by our `build.rs` script. To achieve maximum performance, ease of use, and self-contained builds, `needle_lib` compiles and links statically.
 
-The static library files (`libneedle.a`) for supported operating systems and architectures are stored inside the `native/` folder of the repository. During compilation, the build script automatically identifies your target system and architecture, links the local `libneedle.a` library statically, and links with the C++ standard library. You do not need to configure any environment variables or download external runtime files.
+To comply with the crates.io maximum package size limit (which is strictly 10MB), we do not bundle the large precompiled native libraries (like `libneedle.a` which is around 15-20MB) inside the published crate itself.
+
+Instead, the `build.rs` script automatically downloads the correct precompiled static native library (`libneedle.a`) for your host OS and CPU architecture from our official Hugging Face repository during compilation: [jc4st3lls/needle_lib/native](https://huggingface.co/jc4st3lls/needle_lib). 
+
+These libraries are cached inside the operating system's standard temporary directory (`needle_lib_cache` subfolder) so that downloading is only performed once. Each operating system locates this directory differently:
+- **macOS**: Determined by the `$TMPDIR` environment variable (e.g., `/var/folders/.../needle_lib_cache/`).
+- **Linux**: Usually `/tmp/needle_lib_cache/` (or specified by `$TMPDIR`).
+- **Windows**: Usually `C:\Users\<User>\AppData\Local\Temp\needle_lib_cache\` (or specified by `%TMP%` / `%TEMP%`).
+
+The build script links this library statically and automatically includes the platform's C++ standard library. You do not need to configure any environment variables or manually download any assets.
 
 ---
 
