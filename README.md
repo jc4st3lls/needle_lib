@@ -27,16 +27,16 @@ Add `needle_lib` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-needle_lib = "0.1.1"
+needle_lib = "0.2.0"
 serde_json = "1.0"
 anyhow = "1.0"
 ```
 
 ### Pre-requisites
 
-The native library linkage is fully managed by our `build.rs` script. To keep the crate lightweight and compliant with crates.io size constraints, the build script automatically downloads the correct precompiled native library (`libneedle.dylib` on macOS, `libneedle.so` on Linux, or `libneedle.dll` on Windows) for your target CPU architecture.
+The native library linkage is fully managed by our `build.rs` script. To achieve maximum performance, ease of use, and self-contained builds, `needle_lib` compiles and links statically.
 
-These shared libraries and models are downloaded during compilation from our official Hugging Face repository: [jc4st3lls/needle_lib](https://huggingface.co/jc4st3lls/needle_lib). They are stored under the user's home directory inside the `~/.needle/` directory. They are linked automatically using `rpath`, so you do not need to configure any complex environment variables or manually download any assets.
+The static library files (`libneedle.a`) for supported operating systems and architectures are stored inside the `native/` folder of the repository. During compilation, the build script automatically identifies your target system and architecture, links the local `libneedle.a` library statically, and links with the C++ standard library. You do not need to configure any environment variables or download external runtime files.
 
 ---
 

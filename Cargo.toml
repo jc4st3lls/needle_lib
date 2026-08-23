@@ -1,16 +1,19 @@
 [package]
 name = "needle_lib"
-version = "0.1.1"
+version = "0.2.0"
 edition = "2024"
 description = "A Rust inference library for the Cactus Needle2 binary model, supporting local tool-calling and LLM reasoning."
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/jc4st3lls/needle_lib"
+homepage = "https://github.com/jc4st3lls/needle_lib"
+documentation = "https://docs.rs/needle_lib"
 keywords = ["inference", "cactus", "needle", "tool-calling", "ffi"]
 categories = ["api-bindings", "development-tools::ffi"]
 include = [
     "src/**/*",
     "examples/**/*",
+    "native/**/*",
     "Cargo.toml",
     "build.rs",
     "wrapper.h",
@@ -25,4 +28,3 @@ anyhow = "1"
 
 [build-dependencies]
 bindgen = "0.72.1"
-ureq = { version = "3.4"}
